@@ -16,6 +16,12 @@ def get_contents_list(table):
 		item_str = str(item.string).strip()
 		item_str = item_str[:len(item_str) - 2].strip()
 		item_list.append(item_str)
+
+	#Tables containing menu items at each station, indices correspond with station
+	station_tables = table.find_all('div')
+
+	print(station_tables)
+	
 	return item_list
 	
 
