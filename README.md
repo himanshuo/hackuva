@@ -8,6 +8,12 @@ git remote add origin https://github.com/himanshuo/hackuva.git
 git push -u origin master
 
 
+just to update a README.md
+git add README.md
+git commit -m "first commit"
+git push -u origin master
+
+
 
 
 
