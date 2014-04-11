@@ -9,6 +9,7 @@ def get_page(url):
 	return req.read()
 
 def get_contents_list(table):
+	#Find the station names, stored in an <a> tag at the table's top level
 	items = table.find_all('a', recursive=False)
 	item_list = []
 	for item in items:
@@ -16,12 +17,15 @@ def get_contents_list(table):
 		item_str = item_str[:len(item_str) - 2].strip()
 		item_list.append(item_str)
 	return item_list
+	
 
 def get_first_child(tag):
 	return next(tag.children)
 	
 def move_down(tag, level):
 	for x in range(level):
+		if tag == None:
+			return None
 		tag = get_first_child(tag)
 	return tag
 
