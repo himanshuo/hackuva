@@ -24,8 +24,6 @@ def get_first_child(tag):
 	
 def move_down(tag, level):
 	for x in range(level):
-		if tag == None:
-			return None
 		tag = get_first_child(tag)
 	return tag
 
@@ -37,7 +35,15 @@ html = get_page(url)
 soup = BeautifulSoup(html)
 
 lunch = move_down(soup.find("table", id="menu1"), 2)
-dinner = move_down(soup.find("table", id="menu2"), 2)
-breakfast = move_down(soup.find("table", id="menu3"), 2)
 
-print(get_contents_list(dinner))
+has_dinner = len(soup.find_all("img", id="DinnerICN")) != 0
+
+#These could be swapped based on which is present
+if has_dinner:
+	dinner = move_down(soup.find("table", id="menu2"), 2)
+	breakfast = move_down(soup.find("table", id="menu3"), 2)
+else:
+	dinner = None
+	breakfast = move_down(soup.find("table", id="menu2"), 2)
+
+print(get_contents_list(breakfast))
