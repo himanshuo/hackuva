@@ -9,7 +9,7 @@ git push -u origin master
 
 
 just to update a README.md
-git add README.md
+git add README.md                    //note: you can use git add --a for all files
 git commit -m "first commit"
 git push -u origin master
 
