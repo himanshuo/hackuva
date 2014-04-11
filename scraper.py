@@ -63,4 +63,4 @@ else:
 	dinner = None
 	breakfast = move_down(soup.find("table", id="menu2"), 2)
 
-print(get_contents_list(breakfast))
+print(build_menu(breakfast))
