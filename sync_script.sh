@@ -7,5 +7,5 @@ git pull
 git add --all
 date=`date`
 echo $date
-git commit -m "Auto commit at $date"
+git commit -m "Auto commit on $date"
 git push -u origin master
