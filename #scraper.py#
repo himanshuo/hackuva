@@ -26,7 +26,13 @@ def get_content_list(table):
 		item_list.append(item_str)
 	return item_list
 
-def get_station_menus(station_tables):
+def get_station_menus(table):
+	#Tables containing menu items at each station, indices correspond with station
+	station_tables = table.find_all('div', recursive=False)
+	
+	print(station_tables)
+	#for x in range(len(station_tables)):
+	#	station_tables[x] = move_down(station_tables[x], 1)
 	station_menus = []
 	for table in station_tables:
 		items = get_content_list(table)
@@ -35,9 +41,7 @@ def get_station_menus(station_tables):
 
 def build_menu(table):
 	stations = get_content_list(table)
-	#Tables containing menu items at each station, indices correspond with station
-	station_tables = table.find_all('div', recursive=False)
-	station_menus = get_station_menus(station_tables)
+	station_menus = get_station_menus(table)
 	print(stations)
 	print(station_menus)
 	
