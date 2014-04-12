@@ -9,6 +9,8 @@ def get_first_child(tag):
 	
 def move_down(tag, level):
 	for x in range(level):
+		if tag == None:
+			return None
 		tag = get_first_child(tag)
 	return tag
 
@@ -63,32 +65,51 @@ def build_menu(table):
 	station_menus = get_station_menus(table)
 	return list(zip(stations, station_menus))
 	
+def get_menu(name, id):
+	url = "http://www.campusdish.com/en-US/CSMA/Virginia/Home.htm?LocationID=" + id
+	html = get_page(url)
 	
-url = "http://www.campusdish.com/en-US/CSMA/Virginia/Home.htm?LocationID=138"
-hall = "Newcomb"
+	soup = BeautifulSoup(html)
 
-html = get_page(url)
+	lunch = move_down(soup.find("table", id="menu1"), 2)
 
-soup = BeautifulSoup(html)
+	has_dinner = len(soup.find_all("img", id="DinnerICN")) != 0
 
-lunch = move_down(soup.find("table", id="menu1"), 2)
+	#These could be swapped based on which is present
+	if has_dinner:
+		dinner = move_down(soup.find("table", id="menu2"), 2)
+		breakfast = move_down(soup.find("table", id="menu3"), 2)
+	else:
+		dinner = None
+		breakfast = move_down(soup.find("table", id="menu2"), 2)
 
-has_dinner = len(soup.find_all("img", id="DinnerICN")) != 0
+	full_menu = []
+	full_menu.append(["Lunch", build_menu(lunch)])
 
-#These could be swapped based on which is present
-if has_dinner:
-	dinner = move_down(soup.find("table", id="menu2"), 2)
-	breakfast = move_down(soup.find("table", id="menu3"), 2)
-else:
-	dinner = None
-	breakfast = move_down(soup.find("table", id="menu2"), 2)
+	if dinner != None:
+		full_menu.append(["Dinner", build_menu(dinner)])
+	if breakfast != None:
+		full_menu.append(["Breakfast", build_menu(breakfast)])
 
-full_menu = []
-full_menu.append(["Lunch", build_menu(lunch)])
+	return [name, full_menu]
 
-if dinner != None:
-	full_menu.append(["Dinner", build_menu(dinner)])
-if lunch != None:
-	full_menu.append(["Breakfast", build_menu(breakfast)])
+def pull_options(home_page):
+	soup = BeautifulSoup(get_page(home_page))
+	select = soup.find("select", {"name" : "WucChalkboard1:findLocations"})
+	children = select.find_all("option")
+	options_list = []
+	for bitch_please in children:
+		id = bitch_please['value']
+		hall_name = str(bitch_please.string)
+		options_list.append([hall_name, id])
+	return options_list
 
-print([hall, full_menu])
+options = pull_options("http://www.campusdish.com/en-us/CSMA/VIRGINIA")
+
+menu_list = []
+
+for option in options:
+	menu_list.append(get_menu(option[0], option[1]))
+
+#We'll need to actually do something with this soon
+print(menu_list)
