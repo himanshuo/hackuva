@@ -1,5 +1,7 @@
 #The classes to make this easier to read
 
+import json
+
 class Item:
 	def __init__(self, name, nutrition=[]):
 		self.name = name
@@ -27,3 +29,7 @@ class DiningHall:
 		self.meals = meals
 	def __repr__(self):
 		return "[" + self.name + "," + str(self.meals) + "]"
+
+
+def get_json(objs):
+	return json.dumps(objs, default=lambda o: o.__dict__)

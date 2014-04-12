@@ -125,7 +125,7 @@ def do_scrape():
 
 dining_halls = do_scrape()
 
-print(json.dumps(dining_halls, default=lambda o: o.__dict__))
+print(get_json(dining_halls))
 
 
 #Open database connection

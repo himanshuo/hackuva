@@ -18,8 +18,7 @@ public class StationAdapter extends ArrayAdapter<Object>
 	
 	public View inflateStationView(DiningHall.Station station, View mView)
 	{
-		if (mView == null)
-			mView = View.inflate(getContext(), R.layout.station_view, null);
+		mView = View.inflate(getContext(), R.layout.station_view, null);
 		
 		TextView text = (TextView)mView.findViewById(R.id.stationName);
 		
@@ -30,12 +29,13 @@ public class StationAdapter extends ArrayAdapter<Object>
 	
 	public View inflateItemView(DiningHall.Item item, View mView)
 	{
-		if (mView == null)
-			mView = View.inflate(getContext(), R.layout.item_view, null);
+		mView = View.inflate(getContext(), R.layout.item_view, null);
 		
 		TextView text = (TextView)mView.findViewById(R.id.itemName);
 		
-		text.setText(item.getName());
+		String name = item.getName();
+		
+		text.setText(name);
 		
 		return mView;
 	}
@@ -49,8 +49,10 @@ public class StationAdapter extends ArrayAdapter<Object>
 		
 		if (obj instanceof DiningHall.Station)
 			return inflateStationView((DiningHall.Station)obj, mView);
-		else
+		else if (obj instanceof DiningHall.Item)
 			return inflateItemView((DiningHall.Item)obj, mView);
+		else
+			return mView;
 	}
 	
 	/**
