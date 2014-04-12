@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import sys
 from dining_objs import *
+import json
 
 
 def get_first_child(tag):
@@ -124,7 +125,8 @@ def do_scrape():
 
 dining_halls = do_scrape()
 
-print(dining_halls)
+print(json.dumps(dining_halls, default=lambda o: o.__dict__))
+
 
 #Open database connection
 #db = pymysql.connect("localhost","serveman","uvahacks","uvahacks" )
