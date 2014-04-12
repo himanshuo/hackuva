@@ -26,7 +26,7 @@ public class MenuItemActivity extends ActionBarActivity {
 		String itemName = this.getIntent().getExtras().getString("itemName");
 		String item [] = this.getIntent().getExtras().getStringArray("itemNutrition");
 		this.foodInfoListView = (ListView)this.findViewById(R.id.item_info_list);
-		this.foodInfoListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item));
+		this.foodInfoListView.setAdapter(new NutritionAdapter(this, android.R.layout.simple_list_item_1, item));
 		this.foodName = (TextView)this.findViewById(R.id.item_info_name);
 		this.foodName.setText(itemName);
 	}
