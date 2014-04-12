@@ -10,6 +10,8 @@ class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		params = self.path.split("?")
 		params = parse_qs(params[1] if len(params) > 1 else "")
 		print(params)
+
+		#Respond
 		self.send_response(200)
 		self.send_header("Content-type", "text/plain")
 		self.end_headers()
