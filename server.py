@@ -1,6 +1,7 @@
 #The webserver. Super cool stuff.
 
 import http.server
+import socketserver
 
 Handler = http.server.SimpleHTTPRequestHandler
 httpd = socketserver.TCPServer(("", 8000), Handler)
