@@ -64,7 +64,8 @@ def build_menu(table):
 	return list(zip(stations, station_menus))
 	
 	
-url = "http://www.campusdish.com/en-US/CSMA/Virginia/Home.htm?LocationID=138"#sys.argv[1]
+url = "http://www.campusdish.com/en-US/CSMA/Virginia/Home.htm?LocationID=138"
+hall = "Newcomb"
 
 html = get_page(url)
 
@@ -83,4 +84,11 @@ else:
 	breakfast = move_down(soup.find("table", id="menu2"), 2)
 
 full_menu = []
-full_menu.append(["Lunch", build_menu(lunch)]
+full_menu.append(["Lunch", build_menu(lunch)])
+
+if dinner != None:
+	full_menu.append(["Dinner", build_menu(dinner)])
+if lunch != None:
+	full_menu.append(["Breakfast", build_menu(breakfast)])
+
+print([hall, full_menu])
