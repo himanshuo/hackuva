@@ -26,8 +26,9 @@ def get_content_list(table):
 		item_list.append(item_str)
 	return item_list
 
-def get_station_nutrition(station_tables):
-	pass #TODO
+def get_station_nutrition(table):
+	nut_sections = table.find_all('div', class_="section", recursive=False)
+	return []
 	
 def get_station_menus(table):
 	#Tables containing menu items at each station, indices correspond with station
@@ -35,8 +36,10 @@ def get_station_menus(table):
 	station_menus = []
 	for table in station_tables:
 		items = get_content_list(table)
+		nutritional_info = get_station_nutrition(table)
+		#Zip into a single list
+		items = zip(items, nutritional_info)
 		station_menus.append(items)
-	nutritional_info = get_station_nutrition(station_tables)
 	return station_menus
 
 def build_menu(table):
