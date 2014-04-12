@@ -3,6 +3,8 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import sys
+import pymysql
+
 
 def get_first_child(tag):
 	return next(tag.children)
@@ -108,8 +110,26 @@ options = pull_options("http://www.campusdish.com/en-us/CSMA/VIRGINIA")
 
 menu_list = []
 
-for option in options:
-	menu_list.append(get_menu(option[0], option[1]))
+#for option in options:
+#	menu_list.append(get_menu(option[0], option[1]))
 
 #We'll need to actually do something with this soon
 print(menu_list)
+
+#Open database connection
+db = pymysql.connect("localhost","serveman","uvahacks","uvahacks" )
+
+# prepare a cursor object using cursor() method
+cursor = db.cursor()
+
+# execute SQL query using execute() method.
+cursor.execute("SELECT VERSION()")
+
+# Fetch a single row using fetchone() method.
+data = cursor.fetchone()
+
+print ("Database version : %s " % data)
+
+# disconnect from server
+db.close()
+
