@@ -3,7 +3,6 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import sys
-import menu_hierarchy
 
 def get_first_child(tag):
 	return next(tag.children)
@@ -83,4 +82,5 @@ else:
 	dinner = None
 	breakfast = move_down(soup.find("table", id="menu2"), 2)
 
-lunch_list = ["Lunch", build_menu(lunch)]
+full_menu = []
+full_menu.append(["Lunch", build_menu(lunch)]
