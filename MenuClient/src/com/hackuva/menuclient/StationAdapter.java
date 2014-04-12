@@ -45,7 +45,7 @@ public class StationAdapter extends ArrayAdapter<Object>
 			@Override
 			public void onClick(View v)
 			{
-				Intent launcher = new Intent(StationAdapter.this.getContext(), MainActivity.class/*MenuItemActivity.class*/);
+				Intent launcher = new Intent(StationAdapter.this.getContext(), MenuItemActivity.class);
 				launcher.putExtra("itemName", item.getName());
 				launcher.putExtra("itemNutrition", item.getNutrition());
 				StationAdapter.this.getContext().startActivity(launcher);

@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.os.Build;
 
-public class MenuItem extends ActionBarActivity {
+public class MenuItemActivity extends ActionBarActivity {
 
 	private ListView foodInfoListView;
 	private TextView foodName;
@@ -29,15 +29,6 @@ public class MenuItem extends ActionBarActivity {
 		this.foodInfoListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item));
 		this.foodName = (TextView)this.findViewById(R.id.item_info_name);
 		this.foodName.setText(itemName);
-	}
-	
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_item, menu);
-		return true;
 	}
 
 }
