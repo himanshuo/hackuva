@@ -1,13 +1,23 @@
 package com.hackuva.menuclient;
 
+import java.util.Arrays;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity
 {
 	private DiningHall[] diningHalls;
+	
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -16,7 +26,8 @@ public class MainActivity extends ActionBarActivity
 		setContentView(R.layout.activity_main);
 		
 		//Just what it says
-		startMenuUpdate();
+		if (diningHalls == null)
+			startMenuUpdate();	
 	}
 
 	@Override
@@ -68,5 +79,14 @@ public class MainActivity extends ActionBarActivity
 	public void updateDiningHalls(DiningHall[] diningHalls)
 	{
 		this.diningHalls = diningHalls;
+		
+		Log.d("Debug", Arrays.toString(diningHalls));
+		
+		refreshHallList();
+	}
+	
+	public void refreshHallList()
+	{
+		//TODO
 	}
 }
