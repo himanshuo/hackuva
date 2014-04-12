@@ -1,39 +1,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
-
-    <ImageView
-        android:id="@+id/dining_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/menu"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/dining_icon"
-        android:text="Menu"
-        android:textSize="12sp" />
+	android:layout_height="wrap_content">
     
-    <TextView
+    <LinearLayout 
+        android:id="@+id/spinner_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/menu"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@+id/dining_icon"
-        android:gravity="center_vertical"
-        android:text="Name"
-        android:textSize="16sp" />
+        >
+        
+        <Spinner 
+    	android:id="@+id/dining_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+	
+		<Spinner 
+        android:id="@+id/meal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+	
+    </LinearLayout>
+    
+
+	<View
+	    android:id="@+id/line"
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="#0000FF"
+	    android:layout_below="@id/spinner_layout"/>
+	
+	<ListView 
+	    android:id="@+id/big_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_below="@id/line"
+	    >
+	    
+	</ListView>
+
+
+	</RelativeLayout>
 
     
 
-</RelativeLayout>
