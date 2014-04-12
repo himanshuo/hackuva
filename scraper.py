@@ -110,8 +110,14 @@ options = pull_options("http://www.campusdish.com/en-us/CSMA/VIRGINIA")
 
 menu_list = []
 
-#for option in options:
-#	menu_list.append(get_menu(option[0], option[1]))
+for option in options:
+	menu_list.append(get_menu(option[0], option[1]))
+
+"""Data format:
+	[['Dining location', [['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]]]]
+   Justification:
+   	I'm so sorry.
+"""
 
 #We'll need to actually do something with this soon
 print(menu_list)
