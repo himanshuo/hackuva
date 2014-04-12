@@ -1,8 +1,9 @@
-#Beautiful soup testing
+#Dining Menu Web Scraper
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import sys
+import menu_hierarchy
 
 def get_first_child(tag):
 	return next(tag.children)
@@ -37,9 +38,10 @@ def get_station_nutrition(table):
 		#The actual nutritional information. Pull info from "item" attrs
 		for nut_tag in item_nuts.children:
 			if nut_tag.has_attr('n') and nut_tag.has_attr('v'):
-				name = str(nut_tag.n).strip()
-				value = str(nut_tag.v).strip()
-				if name != "" and value != "":
+				name = str(nut_tag['n']).strip()
+				value = str(nut_tag['v']).strip().replace('Â\xa0', ' ')
+				#Make sure relevant attrs have valid values
+				if name != "" and value != "" and value.find("99999.99") == -1:
 					my_nuts.append(name + ": " + value)
 		nut_list.append(my_nuts)
 	return nut_list
@@ -57,11 +59,10 @@ def get_station_menus(table):
 	return station_menus
 
 def build_menu(table):
+	"""Menu format: [[station, [item, [nutrition]]]]"""
 	stations = get_content_list(table)
 	station_menus = get_station_menus(table)
-	print(stations)
-	print(station_menus)
-	
+	return list(zip(stations, station_menus))
 	
 	
 url = "http://www.campusdish.com/en-US/CSMA/Virginia/Home.htm?LocationID=138"#sys.argv[1]
@@ -82,4 +83,4 @@ else:
 	dinner = None
 	breakfast = move_down(soup.find("table", id="menu2"), 2)
 
-print(build_menu(breakfast))
+lunch_list = ["Lunch", build_menu(lunch)]
