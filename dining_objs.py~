@@ -1,0 +1,22 @@
+#The classes to make this easier to read
+
+class Item:
+	def __init__(self, name, nutrition=[]):
+		self.name = name
+		self.nutrition = nutrition
+
+class Station:
+	def __init__(self, name, items=[]):
+		self.name = name
+		self.items = items
+
+class Meal:
+	def __init__(self, name, stations=[]):
+		self.name = name
+		self.stations = stations
+		
+class DiningHall:
+	def __init__(self, name, meals=[]):
+		self.name = name
+		self.meals = meals
+		

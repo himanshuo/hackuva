@@ -3,7 +3,7 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import sys
-import pymysql
+from dining_objs import *
 
 
 def get_first_child(tag):
@@ -106,45 +106,40 @@ def pull_options(home_page):
 		options_list.append([hall_name, id])
 	return options_list
 
-options = pull_options("http://www.campusdish.com/en-us/CSMA/VIRGINIA")
+def convert_list(menu_list):
+	dining_halls = []
+	for hall in menu_list:
+		dining_halls.append(DiningHall(hall[0], [Meal(meal[0], [Station(station[0], [Item(item[0], item[1]) for item in station[1]]) for station in meal[1]]) for meal in hall[1]]))
+	return dining_halls
+		
+	
 
-menu_list = []
+def do_scrape():
+	options = pull_options("http://www.campusdish.com/en-us/CSMA/VIRGINIA")
+	menu_list = []
+	for option in options:
+		menu_list.append(get_menu(option[0], option[1]))
+	return convert_list(menu_list)
 
-for option in options:
-	menu_list.append(get_menu(option[0], option[1]))
 
-"""Data format:
-	[['Dining location', [['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]]]]
-   Justification:
-   	-At each level, menu_list is a list of tuples
-	-menu_list[0] gives you the first tuple in the outer list, which represents the first dining location: ['Dining location', [['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]]]
-	-menu_list[0][0] will give you the first value in that tuple: 'Dining location'
-	-menu_list[0][1] gives you the second value in that tuple: [['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]]
-	-menu_list[0][1][0] will give you the first tuple in that list, which is ['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]
-	-menu_list[0][1][0][0] gives you the first value in the first tuple of the second list: 'Meal'
-	-menu_list[0][1][0][1] gives you the second value in the first tuple, which is the list of tuples associated with it: [['Station', [['Menu Item', [Nutrition]]]]]
-	-menu_list[0][1][0][1][0] will give you the first station
-	-and so on...
-	-We'll convert this to an object hierarchy at our soonest convenience. I'll probably handle that tomorrow.
-"""
+dining_halls = do_scrape()
 
-#We'll need to actually do something with this soon
-print(menu_list)
+print(dining_halls)
 
 #Open database connection
-db = pymysql.connect("localhost","serveman","uvahacks","uvahacks" )
+#db = pymysql.connect("localhost","serveman","uvahacks","uvahacks" )
 
 # prepare a cursor object using cursor() method
-cursor = db.cursor()
+#cursor = db.cursor()
 
 # execute SQL query using execute() method.
-cursor.execute("SELECT VERSION()")
+#cursor.execute("SELECT VERSION()")
 
 # Fetch a single row using fetchone() method.
-data = cursor.fetchone()
+#data = cursor.fetchone()
 
-print ("Database version : %s " % data)
+#print ("Database version : %s " % data)
 
 # disconnect from server
-db.close()
+#db.close()
 
