@@ -1,6 +1,8 @@
 package com.hackuva.menuclient;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -33,10 +35,8 @@ public class MainActivity extends ActionBarActivity
 		setContentView(R.layout.activity_main);
 		
 		//Just what it says
-		if (diningHalls == null)
-			startMenuUpdate();	
-		
-		buildViews();
+		startMenuUpdate();	
+	
 	}
 
 	@Override
@@ -121,6 +121,9 @@ public class MainActivity extends ActionBarActivity
 	 */
 	public void buildViews()
 	{
+		if (diningHalls == null)
+			return;
+		
 		//Get the views from XML
 		this.diningLoc = (Spinner)this.findViewById(R.id.dining_location);
 		this.meal = (Spinner)this.findViewById(R.id.meal);
@@ -158,7 +161,7 @@ public class MainActivity extends ActionBarActivity
 		
 		Log.d("Debug", Arrays.toString(diningHalls));
 		
-		refreshHallList();
+		buildViews();
 	}
 	
 	public void refreshHallList()
