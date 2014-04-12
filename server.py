@@ -7,7 +7,7 @@ from urllib.parse import parse_qs
 class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 	def do_GET(self):
 		#Get parameters from request:
-		params = parse_qs(self.path).query
+		params = parse_qs(self.path)
 		print(params)
 		self.send_response(200)
 		self.send_header("Content-type", "text/plain")
