@@ -37,7 +37,14 @@ public class MenuUpdateTask extends AsyncTask<Boolean, DiningHall, Boolean>
 	
 	protected void onProgressUpdate(DiningHall... diningHalls)
 	{
-		
+		if (failFlag)
+		{
+			callback.notifyFailedUpdate();
+		}
+		else
+		{
+			callback.updateDiningHalls(diningHalls);
+		}
 	}
 
 }

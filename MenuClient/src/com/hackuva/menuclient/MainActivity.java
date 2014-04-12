@@ -1,18 +1,13 @@
 package com.hackuva.menuclient;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 public class MainActivity extends ActionBarActivity
 {
+	private DiningHall[] diningHalls;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -53,4 +48,25 @@ public class MainActivity extends ActionBarActivity
 		task.execute();
 	}
 
+	/**
+	 * Notify the user of a failed update
+	 */
+	public void notifyFailedUpdate()
+	{
+		GenericAlertNotification note = new GenericAlertNotification();
+		Bundle args = new Bundle();
+		args.putString("title", "Update Failed");
+		args.putString("message", "Could not reach server. Please do not panic, we're fixing the problem now.");
+		note.setArguments(args);
+		note.show(getSupportFragmentManager(), "failureNotification");
+	}
+	
+	/**
+	 * Update the dining list
+	 * @param diningHalls
+	 */
+	public void updateDiningHalls(DiningHall[] diningHalls)
+	{
+		this.diningHalls = diningHalls;
+	}
 }
