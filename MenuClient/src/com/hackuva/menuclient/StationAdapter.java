@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -27,7 +29,7 @@ public class StationAdapter extends ArrayAdapter<Object>
 		return mView;
 	}
 	
-	public View inflateItemView(DiningHall.Item item, View mView)
+	public View inflateItemView(final DiningHall.Item item, View mView)
 	{
 		mView = View.inflate(getContext(), R.layout.item_view, null);
 		
@@ -36,6 +38,20 @@ public class StationAdapter extends ArrayAdapter<Object>
 		String name = item.getName();
 		
 		text.setText(name);
+		
+		//Register a click listener
+		mView.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v)
+			{
+				Intent launcher = new Intent(StationAdapter.this.getContext(), MainActivity.class/*MenuItemActivity.class*/);
+				launcher.putExtra("itemName", item.getName());
+				launcher.putExtra("itemNutrition", item.getNutrition());
+				StationAdapter.this.getContext().startActivity(launcher);
+			}
+			
+		});
 		
 		return mView;
 	}

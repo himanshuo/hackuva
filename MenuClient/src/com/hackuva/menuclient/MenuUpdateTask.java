@@ -1,5 +1,6 @@
 package com.hackuva.menuclient;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 /**
@@ -10,11 +11,13 @@ import android.os.AsyncTask;
 public class MenuUpdateTask extends AsyncTask<Boolean, DiningHall, Boolean>
 {
 	private final MainActivity callback;
+	private final ProgressDialog dial;
 	private boolean failFlag;
 	
-	public MenuUpdateTask(MainActivity callback)
+	public MenuUpdateTask(MainActivity callback, ProgressDialog dial)
 	{
 		this.callback = callback;
+		this.dial = dial;
 		failFlag = false;
 	}
 
@@ -32,11 +35,11 @@ public class MenuUpdateTask extends AsyncTask<Boolean, DiningHall, Boolean>
 		return !failFlag;
 	}
 	
-	
-
-	
 	protected void onProgressUpdate(DiningHall... diningHalls)
 	{
+		//Dismiss the loading dialog
+		dial.dismiss();
+		
 		if (failFlag)
 		{
 			callback.notifyFailedUpdate();

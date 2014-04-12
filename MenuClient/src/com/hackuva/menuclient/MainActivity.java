@@ -1,14 +1,16 @@
 package com.hackuva.menuclient;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -36,9 +38,56 @@ public class MainActivity extends ActionBarActivity
 		
 		//Just what it says
 		startMenuUpdate();	
-	
+
+		buildViews();
 	}
 
+	public void buildViews()
+	{
+		//Get the views from XML
+		this.diningLoc = (Spinner)this.findViewById(R.id.dining_location);
+		this.meal = (Spinner)this.findViewById(R.id.meal);
+		this.menuList = (ListView)this.findViewById(R.id.big_list);
+		
+		//Now set the listeners. Note that the individual items in the listview listen for clicks, NOT THE LISTVIEW. Hence, it has no listener
+		this.diningLoc.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id)
+			{
+				MainActivity.this.curDiningHall = position;
+				refreshMeals();
+				refreshMenuList();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent)
+			{
+				//Do nothing
+			}
+			
+		});
+		
+		this.meal.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id)
+			{
+				MainActivity.this.curMeal = position;
+				refreshMenuList();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent)
+			{
+				//Do nothing
+			}
+			
+		});
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -64,7 +113,8 @@ public class MainActivity extends ActionBarActivity
 	
 	public void startMenuUpdate()
 	{
-		MenuUpdateTask task = new MenuUpdateTask(this);
+		ProgressDialog dial = ProgressDialog.show(this, "Loading menu options", "Please wait...", true, false);
+		MenuUpdateTask task = new MenuUpdateTask(this, dial);
 		task.execute();
 	}
 	
@@ -116,26 +166,40 @@ public class MainActivity extends ActionBarActivity
 		return this.diningHalls[this.curDiningHall].getMeals()[this.curMeal].getStations();
 	}
 	
-	/**
-	 * Build the views
-	 */
-	public void buildViews()
+	public void refreshAllViews()
+	{
+		refreshDiningLocations();
+		refreshMeals();
+		refreshMenuList();
+	}
+	
+	public void refreshDiningLocations()
 	{
 		if (diningHalls == null)
 			return;
 		
-		//Get the views from XML
-		this.diningLoc = (Spinner)this.findViewById(R.id.dining_location);
-		this.meal = (Spinner)this.findViewById(R.id.meal);
-		this.menuList = (ListView)this.findViewById(R.id.big_list);
-
-		//Set adapters for each. Note that menuList needs a custom adapter to handle both stations and items, where only items listen for clicks and shit
+		//Only let this be changed here
 		this.diningLoc.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.getDiningLocs()));
-		this.meal.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.getPosMeals()));
-		this.menuList.setAdapter(new StationAdapter(this, android.R.layout.simple_list_item_1, this.getStations()));
+	}
+	
+	public void refreshMeals()
+	{
+		if (diningHalls == null)
+			return;
 		
-		//Now set the listeners. Note that the individual items in the listview listen for clicks, NOT THE LISTVIEW. Hence, it has no listener
+		this.meal.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.getPosMeals()));
+	}
+	
+	/**
+	 * Build the views
+	 */
+	public void refreshMenuList()
+	{
+		if (diningHalls == null)
+			return;
 
+		//Set adapter
+		this.menuList.setAdapter(new StationAdapter(this, android.R.layout.simple_list_item_1, this.getStations()));
 	}
 
 	/**
@@ -161,11 +225,7 @@ public class MainActivity extends ActionBarActivity
 		
 		Log.d("Debug", Arrays.toString(diningHalls));
 		
-		buildViews();
-	}
-	
-	public void refreshHallList()
-	{
-		//TODO
+		
+		refreshAllViews();
 	}
 }
