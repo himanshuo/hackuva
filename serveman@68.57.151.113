@@ -74,33 +74,29 @@ def get_menu(name, id):
 	
 	soup = BeautifulSoup(html)
 
+	lunch = move_down(soup.find("table", id="menu1"), 2)
+
 	has_dinner = len(soup.find_all("img", id="DinnerICN")) != 0
 	has_brunch = len(soup.find_all("img", id="BrunchICN")) != 0
-
-	breakfast, brunch, lunch, dinner = None, None, None, None
 	
-	first = move_down(soup.find("table", id="menu1"), 2)
-	second = move_down(soup.find("table", id="menu2"), 2)
-	third = move_down(soup.find("table", id="menu3"), 2)
-
 	#These could be swapped based on which is present
 	if has_dinner and not has_brunch:
-		lunch = first
-		dinner = second
-		breakfast = third
-	elif has_brunch and not has_dinner:
-		brunch = first
+		dinner = move_down(soup.find("table", id="menu2"), 2)
+		breakfast = move_down(soup.find("table", id="menu3"), 2)
+		brunch = None
 	elif has_brunch:
-		dinner = first
-		brunch = second
+		dinner = lunch
+		lunch = None
+		breakfast = None
+		brunch = move_down(soup.find("table", id="menu2"), 2)
 	else:
-		lunch = first
-		breakfast = second
+		dinner = None
+		breakfast = move_down(soup.find("table", id="menu2"), 2)
+		brunch = None
 
 	full_menu = []
+	full_menu.append(["Lunch", build_menu(lunch)])
 
-	if lunch != None:
-		full_menu.append(["Lunch", build_menu(lunch)])
 	if dinner != None:
 		full_menu.append(["Dinner", build_menu(dinner)])
 	if breakfast != None:
