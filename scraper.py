@@ -116,7 +116,16 @@ for option in options:
 """Data format:
 	[['Dining location', [['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]]]]
    Justification:
-   	I'm so sorry.
+   	-At each level, menu_list is a list of tuples
+	-menu_list[0] gives you the first tuple in the outer list, which represents the first dining location: ['Dining location', [['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]]]
+	-menu_list[0][0] will give you the first value in that tuple: 'Dining location'
+	-menu_list[0][1] gives you the second value in that tuple: [['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]]
+	-menu_list[0][1][0] will give you the first tuple in that list, which is ['Meal', [['Station', [['Menu Item', [Nutrition]]]]]]
+	-menu_list[0][1][0][0] gives you the first value in the first tuple of the second list: 'Meal'
+	-menu_list[0][1][0][1] gives you the second value in the first tuple, which is the list of tuples associated with it: [['Station', [['Menu Item', [Nutrition]]]]]
+	-menu_list[0][1][0][1][0] will give you the first station
+	-and so on...
+	-We'll convert this to an object hierarchy at our soonest convenience. I'll probably handle that tomorrow.
 """
 
 #We'll need to actually do something with this soon
