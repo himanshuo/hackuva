@@ -3,6 +3,9 @@
 #Update first, done to avoid conflicts
 git pull
 
+#Remove caches and superfluous files
+rm -rf __pycache__/ *~ *#
+
 #Now push changes
 git add --all
 date=`date`
