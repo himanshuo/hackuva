@@ -36,8 +36,13 @@ def get_station_nutrition(table):
 		my_nuts = []
 		#The actual nutritional information. Pull info from "item" attrs
 		for nut_tag in item_nuts.children:
-			
-	return []
+			if nut_tag.has_attr('n') and nut_tag.has_attr('v'):
+				name = str(nut_tag.n).strip()
+				value = str(nut_tag.v).strip()
+				if name != "" and value != "":
+					my_nuts.append(name + ": " + value)
+		nut_list.append(my_nuts)
+	return nut_list
 	
 def get_station_menus(table):
 	#Tables containing menu items at each station, indices correspond with station
@@ -47,7 +52,7 @@ def get_station_menus(table):
 		items = get_content_list(table)
 		nutritional_info = get_station_nutrition(table)
 		#Zip into a single list
-		#items = list(zip(items, nutritional_info))
+		items = list(zip(items, nutritional_info))
 		station_menus.append(items)
 	return station_menus
 
