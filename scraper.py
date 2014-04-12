@@ -27,7 +27,16 @@ def get_content_list(table):
 	return item_list
 
 def get_station_nutrition(table):
-	nut_sections = table.find_all('div', class_="section", recursive=False)
+	nut_sections = table.find_all('div', {"class" : "section"}, recursive=False)
+	for x in range(len(nut_sections)):
+		nut_sections[x] = move_down(nut_sections[x], 2)
+	#Now get the nutritional information for each item:
+	nut_list = []
+	for item_nuts in nut_sections:
+		my_nuts = []
+		#The actual nutritional information. Pull info from "item" attrs
+		for nut_tag in item_nuts.children:
+			
 	return []
 	
 def get_station_menus(table):
@@ -38,7 +47,7 @@ def get_station_menus(table):
 		items = get_content_list(table)
 		nutritional_info = get_station_nutrition(table)
 		#Zip into a single list
-		items = zip(items, nutritional_info)
+		#items = list(zip(items, nutritional_info))
 		station_menus.append(items)
 	return station_menus
 
