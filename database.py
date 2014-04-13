@@ -13,6 +13,8 @@ cursor = db.cursor()
 
 
 def commit(sql):
+    global db
+    global cursor
     try:
         # Execute the SQL command                                        
         cursor.execute(sql)
@@ -108,7 +110,7 @@ def get_dining_halls():
     
     #items are complete
     for f in range(len(foods)):
-        tempi = Item(foods[f][1], [item.strip() for item in foods[f][4][1:len(foods[f][4])].split(',')])
+        tempi = Item(foods[f][1], [item.strip() for item in foods[f][4][1:len(foods[f][4]) - 1].split(',')])
         oitems.append(tempi)
     
     #dining halls missing meals
@@ -145,22 +147,30 @@ def get_dining_halls():
     return odininghalls
     
 def get_last_insert_id():
-    return commit("SELECT LAST_INSERT_ID()")[0]
+    return db.insert_id()
     
 def insert_dining_hall(dining_hall):
-    commit("INSERT INTO DiningHalls(name, active) VALUES ({:s}, 1)".format(dining_hall.name))
+    sql = "INSERT INTO DiningHalls(name, active) VALUES ('{:s}', 1)".format(dining_hall.name)
+    #print(sql)
+    commit(sql)
     return get_last_insert_id()
 
 def insert_meal(dining_hall_id, meal):
-    commit("INSERT INTO Meals(name, dining_hall, active) VALUES ({:s}, {:s}, 1)".format(meal.name, dining_hall_id))
+    sql = "INSERT INTO Meals(name, dining_hall, active) VALUES ('{:s}', {:d}, 1)".format(meal.name, dining_hall_id)
+    #print(sql)
+    commit(sql)
     return get_last_insert_id()
 
 def insert_station(meal_id, station):
-    commit("INSERT INTO Stations(name, meal, active) VALUES ({:s}, {:s}, 1)".format(station.name, meal_id))
+    sql = "INSERT INTO Stalls(name, meal, active) VALUES ('{:s}', {:d}, 1)".format(station.name, meal_id)
+    #print(sql)
+    commit(sql)
     return get_last_insert_id()
 
 def insert_item(station_id, item):
-    commit("INSERT INTO Items(name, station, active) VALUES ({:s}, {:s}, 1, {:s})".format(item.name, station_id, item.nutrition))
+    sql = "INSERT INTO Items(name, stall, active, nutrition) VALUES ('{:s}', {:d}, 1, '{:s}')".format(item.name, station_id, str(item.nutrition).replace("'", ""))
+    #print(sql)
+    commit(sql)
     return get_last_insert_id()
       
 def insert_all(dining_halls):
@@ -175,9 +185,5 @@ def insert_all(dining_halls):
                     insert_item(station_id, item)
 
 
-
-#print(get_json(get_dining_halls()))
-
-
 #close db
-db.close()
+#db.close()

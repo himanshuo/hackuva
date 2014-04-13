@@ -5,6 +5,7 @@ from urllib.request import urlopen
 import sys
 from dining_objs import *
 import json
+from database import *
 
 
 def get_first_child(tag):
@@ -139,23 +140,4 @@ def do_scrape():
 
 dining_halls = do_scrape()
 
-print(get_json(dining_halls))
-
-
-#Open database connection
-#db = pymysql.connect("localhost","serveman","uvahacks","uvahacks" )
-
-# prepare a cursor object using cursor() method
-#cursor = db.cursor()
-
-# execute SQL query using execute() method.
-#cursor.execute("SELECT VERSION()")
-
-# Fetch a single row using fetchone() method.
-#data = cursor.fetchone()
-
-#print ("Database version : %s " % data)
-
-# disconnect from server
-#db.close()
-
+insert_all(dining_halls)
