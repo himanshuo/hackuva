@@ -7,11 +7,13 @@ import scraper
 import threading
 import database
 import time
+from dining_objs import *
 
 cache = None
 
 class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 	def build_response(self, param_dict):
+		global cache
 		#Just get dummy data
 		if param_dict.get("halls") != None and "all" in param_dict["halls"]:
 			return get_json(cache)
@@ -37,6 +39,7 @@ def refresh_cache():
 	global cache
 	while True:
 		cache = database.get_dining_halls()
+		print("Finished getting cache at: " + time.strftime("%H:%M:%S"))
 		time.sleep(60 * 37)
 
 #Start the scraper as a thread

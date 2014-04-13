@@ -142,6 +142,7 @@ def run_scraper():
 	while True:
 		dining_halls = do_scrape()
 		insert_all(dining_halls)
+		print("Scraper run complete at " + str(time.strftime(("%H:%M:%S"))))
 		#Sleep between tests
 		time.sleep(60 * 60)
 	
