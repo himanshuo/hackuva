@@ -138,10 +138,10 @@ def do_scrape():
 		menu_list.append(get_menu(option[0], option[1]))
 	return convert_list(menu_list)
 
-
-while True:
-	dining_halls = do_scrape()
-	insert_all(dining_halls)
-	#Sleep between tests
-	time.sleep(60 * 60)
+def run_scraper():
+	while True:
+		dining_halls = do_scrape()
+		insert_all(dining_halls)
+		#Sleep between tests
+		time.sleep(60 * 60)
 	
