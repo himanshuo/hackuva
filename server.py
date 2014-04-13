@@ -16,7 +16,7 @@ class StupidHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		global cache
 		#Just get dummy data
 		if param_dict.get("halls") != None and "all" in param_dict["halls"]:
-			return get_json(cache)
+			return open("scraper.out").read()#get_json(cache)
 		else:
 			return ""
 
@@ -39,7 +39,9 @@ def refresh_cache():
 	global cache
 	while True:
 		cache = database.get_dining_halls()
-		print("Finished getting cache at: " + time.strftime("%H:%M:%S"))
+		print("Finished getting cache at: " + time.strftime("%H:%M:%S")
+)
+		print(cache)
 		time.sleep(60 * 37)
 
 #Start the scraper as a thread
@@ -48,9 +50,9 @@ scraper_thread.daemon = True
 scraper_thread.start()
 
 #Start cache refresher as a thread:
-refresh_thread = threading.Thread(target=refresh_cache)
-refresh_thread.daemon = True
-refresh_thread.start()
+#refresh_thread = threading.Thread(target=refresh_cache)
+#refresh_thread.daemon = True
+#refresh_thread.start()
 		
 httpd = socketserver.TCPServer(("", 8000), StupidHTTPRequestHandler)
 print("Starting at port 8000")

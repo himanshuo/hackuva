@@ -123,6 +123,7 @@ def get_dining_halls():
         temps = Station(stalls[s][1])
         ostalls.append(temps)
 
+
     #match food's stalls with stall
     for f in range(len(foods)):
         for s in range(len(stalls)):
@@ -139,6 +140,8 @@ def get_dining_halls():
             if meals[m][2] == dining_halls[d][0]:
                 odininghalls[d].meals.append(omeals[m])
     
+    
+
     return odininghalls
     
 def get_last_insert_id():
