@@ -6,6 +6,7 @@ import sys
 from dining_objs import *
 import json
 from database import *
+import time
 
 
 def get_first_child(tag):
@@ -138,6 +139,9 @@ def do_scrape():
 	return convert_list(menu_list)
 
 
-dining_halls = do_scrape()
-
-insert_all(dining_halls)
+while True:
+	dining_halls = do_scrape()
+	insert_all(dining_halls)
+	#Sleep between tests
+	time.sleep(60 * 60)
+	
