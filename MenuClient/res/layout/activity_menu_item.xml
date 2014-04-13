@@ -7,17 +7,47 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.hackuva.menuclient.MenuItem$PlaceholderFragment" >
-	<TextView 
+    
+    <LinearLayout 
+        android:id="@+id/item_info_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        
+        <TextView 
 	    android:id="@+id/item_info_name"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"/>"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"/>
+        
+        <Button 
+            android:id="@+id/present_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Present"
+            android:background="#00FF00"/>
+     
+    	<Button
+    	    android:id="@+id/absence_button"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_weight="1"
+    	    android:text="Absent"
+    	    android:background="#FF0000">
+    	    
+    	</Button>
+        
+    </LinearLayout>"
+	
 	    
-	    <ListView 
-	        android:id="@+id/item_info_list"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/item_info_name">
-	    </ListView>
+	<ListView 
+		android:id="@+id/item_info_list"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/item_info_section">
+	</ListView>
 
     
 
