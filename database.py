@@ -98,11 +98,6 @@ def get_dining_halls():
     meals = get_all_active_meals()
     dining_halls = get_all_active_dining_halls()
     
-    print(foods)
-    print(stalls)
-    print(meals)
-    print(dining_halls)
-
     oitems = []
     ostalls=[]
     omeals = []

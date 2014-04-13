@@ -32,4 +32,6 @@ class DiningHall:
 
 
 def get_json(objs):
+	if objs == None:
+		return None
 	return json.dumps(objs, default=lambda o: o.__dict__)
