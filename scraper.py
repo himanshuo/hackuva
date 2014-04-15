@@ -141,9 +141,9 @@ def do_scrape():
 def run_scraper():
 	while True:
 		dining_halls = do_scrape()
-		json = get_json(dining_halls)
-		open("scraper.out", "w").write(json)
-                #insert_all(dining_halls)
+		#json = get_json(dining_halls)
+		#open("scraper.out", "w").write(json)
+		insert_all(dining_halls)
 		print("Scraper run complete at " + str(time.strftime(("%H:%M:%S"))))
 		#Sleep between tests
 		time.sleep(60 * 60)
